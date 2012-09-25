@@ -25,8 +25,14 @@ def get_errors(command, stdout):
     stdout = subprocess.PIPE
     result = subprocess.Popen(command, stdout=stdout)
     output, error = result.communicate()
-    lines = output.splitlines()
+
+    # Discard empty lines
+    lines = [line for line in output.splitlines() if validate_line(line)]
     return lines
+
+
+def validate_line(line):
+    return line and ' errors' not in line
 
 
 def save_output_file_and_get_errors(command, stdout):
@@ -54,6 +60,7 @@ def get_jshint_errors(path='.', output_file=None, options=[]):
 
 
 def get_jslint_errors(path='.', output_file=None, options=[]):
+    options.extend(['--browser=true'])
     return execute('jslint', path, output_file, options)
 
 
@@ -72,10 +79,10 @@ def get_clonedigger_errors(path='.', output_file='output_clonedigger.html',
     output_clonedigger.close()
 
     porcentage = re.search('(?<=duplicates \()\d+', result_clonedigger)
-    porcentage = porcentage.group()
+    porcentage = int(porcentage.group())
 
     total_clones = re.search('(?<=Clones detected: )\d+', result_clonedigger)
-    total_clones = total_clones.group()
+    total_clones = int(total_clones.group())
 
     result = {'total_clones': total_clones, 'percentage_clones': porcentage}
     return result
