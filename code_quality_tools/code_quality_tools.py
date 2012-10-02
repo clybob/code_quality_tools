@@ -3,14 +3,22 @@ import re
 
 
 class CodeQualityCheck():
+    """This class is responsible to get metrics of code quality,
+    using known python tools. The objective is to easily get
+    data of code quality"""
 
     def __execute(self, tool, path, output_file, options):
+        """Prepares to execute a shell command"""
+
         command = [tool, path]
         command.extend(options)
         output = self.__execute_shell_command(command, output_file)
         return output
 
     def __execute_shell_command(self, command, stdout=None):
+        """Executes a shell command and saves output in a file
+        if stdout was passed"""
+
         if stdout is None:
             lines = self.__get_errors(command, stdout)
         else:
@@ -22,6 +30,8 @@ class CodeQualityCheck():
         return errors
 
     def __get_errors(self, command, stdout):
+        """Executes a shell command and captures output"""
+
         stdout = subprocess.PIPE
         result = subprocess.Popen(command, stdout=stdout)
         output, error = result.communicate()
@@ -31,9 +41,14 @@ class CodeQualityCheck():
         return lines
 
     def __validate_line(self, line):
+        """Removes blank lines and lines with total errors jshint"""
+
         return line and ' errors' not in line
 
     def __save_output_file_and_get_errors(self, command, stdout):
+        """Executes a shell command, saves output in output_file and
+        returns output to caller function"""
+
         output_file = open(stdout, 'w')
         result = subprocess.Popen(command, stdout=output_file)
         output, error = result.communicate()
@@ -58,6 +73,9 @@ class CodeQualityCheck():
         return self.__execute('csslint', path, output_file, options)
 
     def get_clonedigger_errors(self, path='.', output_file='output_clonedigger.html', options=[]):
+        """Clonedigger generates a output_file by default, this method read
+        output file and returns a total of clones and percentage of clones"""
+
         options.extend(['--output=%s' % output_file])
         self.__execute('clonedigger', path, None, options)
 
