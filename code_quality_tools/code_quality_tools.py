@@ -1,5 +1,6 @@
 import subprocess
 import re
+import os
 
 
 class CodeQualityCheck():
@@ -72,16 +73,24 @@ class CodeQualityCheck():
         options.extend(['--format=compact'])
         return self.__execute('csslint', path, output_file, options)
 
-    def get_clonedigger_errors(self, path='.', output_file='output_clonedigger.html', options=[]):
+    def get_clonedigger_errors(self, path='.', output_file=None, options=[]):
         """Clonedigger generates a output_file by default, this method read
         output file and returns a total of clones and percentage of clones"""
 
-        options.extend(['--output=%s' % output_file])
+        if output_file is None:
+            default_output_file = 'output_clonedigger.html'
+        else:
+            default_output_file = output_file
+
+        options.extend(['--output=%s' % default_output_file])
         self.__execute('clonedigger', path, None, options)
 
-        output_clonedigger = open(output_file)
+        output_clonedigger = open(default_output_file)
         result_clonedigger = output_clonedigger.read()
         output_clonedigger.close()
+
+        if output_file is None:
+            os.remove(default_output_file)
 
         regex_percentage = '(?<=duplicates \()\d+'
         regex_total = '(?<=Clones detected: )\d+'
