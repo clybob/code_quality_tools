@@ -22,7 +22,7 @@ Usage
 -----
 
 Get Pep8, PyFlakes, JSHint or CSSLint errors and warnings without save output:
-```
+``` python
 from code_quality_tools import CodeQualityCheck
 
 check = CodeQualityCheck()
@@ -33,7 +33,7 @@ check.get_csslint_errors(path='application/path/')
 ```
 
 Get Pep8, PyFlakes, JSHint or CSSLint errors and warnings saving output:
-```
+``` python
 from code_quality_tools import CodeQualityCheck
 
 check = CodeQualityCheck()
@@ -44,7 +44,7 @@ check.get_csslint_errors(path='application/path/', output_file='csslint_errors.t
 ```
 
 Get Pep8, PyFlakes, JSHint or CSSLint errors and warnings passing extra options:
-```
+``` python
 from code_quality_tools import CodeQualityCheck
 
 check = CodeQualityCheck()
@@ -55,7 +55,7 @@ check.get_csslint_errors(path='application/path/', options=['--exclude=some/path
 ```
 
 All examples above returns something as:
-```
+``` python
 {
     'total_errors': 1,
     'list_errors': ['./code_quality_tools.py:60:80: E501 line too long (98 characters)']
@@ -63,7 +63,7 @@ All examples above returns something as:
 ```
 
 Get CloneDigger percentage or total of code duplicate without save output:
-```
+``` python
 from code_quality_tools import CodeQualityCheck
 
 check = CodeQualityCheck()
@@ -71,7 +71,7 @@ check.get_clonedigger_errors(path='application/path/')
 ```
 
 Get CloneDigger percentage or total of code duplicate saving output:
-```
+``` python
 from code_quality_tools import CodeQualityCheck
 
 check = CodeQualityCheck()
@@ -79,7 +79,7 @@ check.get_clonedigger_errors(path='application/path/', output_file='clonedigger_
 ```
 
 Get CloneDigger percentage or total of code duplicate passing extra options:
-```
+``` python
 from code_quality_tools import CodeQualityCheck
 
 check = CodeQualityCheck()
@@ -87,7 +87,7 @@ check.get_clonedigger_errors(path='application/path/', options='--ignore-dir=som
 ```
 
 All examples of CloneDigger returns something as:
-```
+``` python
 {
     'total_clones': 1,
     'percentage_clones': 100
@@ -95,7 +95,7 @@ All examples of CloneDigger returns something as:
 ```
 
 Get all metrics of code quality:
-```
+``` python
 from code_quality_tools import CodeQualityCheck
 
 check = CodeQualityCheck()
@@ -103,7 +103,7 @@ check.get_all_errors(path='application/path/')
 ```
 
 This example returns something as:
-```
+``` python
 {
     'pep8': {
         'total_errors': 1, 
