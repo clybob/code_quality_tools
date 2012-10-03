@@ -4,7 +4,7 @@ code_quality_tools
 What is a code_quality_tools?
 -----------------------------
 
-code_quality_tools is a little API, in python, to collect some data about code quality of your application.
+code_quality_tools is a little API, in python, to collect some data about code quality of your source code (python, css, js).
 
 
 What metrics can I get?
