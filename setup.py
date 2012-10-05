@@ -15,7 +15,7 @@ setup(
                 'source code (python, css, js).',
     long_description=open('README.md').read(),
     install_requires=['pep8', 'pyflakes', 'clonedigger'],
-    entry_points = {
-        'console_scripts': [ 'code_quality_tools = install:main' ]
+    entry_points={
+        'console_scripts': ['code_quality_tools = install:main']
     },
 )
