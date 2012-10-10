@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(
-    name='code_quality_tools',
+    name='CodeQualityTools',
     version='0.1.0',
     author='Romulo Tavares',
     author_email='clybob@hotmail.com',
