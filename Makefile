@@ -23,3 +23,6 @@ install_jshint:
 
 install_csslint:
 	@npm install csslint -g
+
+test:
+	@python code_quality_tools/tests/test_code_quality_tools.py
