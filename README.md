@@ -137,6 +137,21 @@ Dependencies
 - JSHint (https://npmjs.org/package/jshint)
 - CSSLint (https://npmjs.org/package/csslint)
 
+Contributing
+------------
+
+To contribute, send a pull request or create an issue.
+
+Speaking of quality, there's a test suite included. You can use it to check
+if something is broke or to use as a starting point for your own tests.
+
+To run the tests just clone, install and run the test suite.
+
+```
+git clone git://github.com/clybob/code_quality_tools.git
+pip install -e .
+make test
+```
 
 Author
 ------
