@@ -4,12 +4,11 @@ import unittest
 import sys
 import os
 from os.path import join, abspath, dirname, isfile
-sys.path.insert(0, abspath(join(dirname(''))))
 from code_quality_tools import CodeQualityCheck
 
 
 class TestCodeQualityTools(unittest.TestCase):
-    path_fixtures = 'tests/fixtures/'
+    path_fixtures = 'code_quality_tools/tests/fixtures/'
     check = CodeQualityCheck()
     out_files = {
         'pep8': 'pep8_errors.txt',
