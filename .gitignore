@@ -28,3 +28,4 @@ pip-log.txt
 
 # Clonedigger logs
 output_clonedigger.html
+.*.swp

@@ -1,9 +1,10 @@
 # encoding: utf-8
 
 import unittest
-import sys
 import os
-from os.path import join, abspath, dirname, isfile
+
+from os.path import isfile
+
 from code_quality_tools import CodeQualityCheck
 
 
@@ -33,8 +34,10 @@ class TestCodeQualityTools(unittest.TestCase):
 
     def test_get_pep8_errors_with_extra_options(self):
         path_fixture = self.path_fixtures + 'pep8.py'
-        errors = self.check.get_pep8_errors(path_fixture,
-            options=['--ignore=E302'])
+        errors = self.check.get_pep8_errors(
+            path_fixture,
+            options=['--ignore=E302']
+        )
         self.assertEqual(errors['total_errors'], 1)
         self.assertEqual(len(errors['list_errors']), 1)
 
@@ -70,8 +73,10 @@ class TestCodeQualityTools(unittest.TestCase):
 
     def test_get_jshint_errors_with_extra_options(self):
         path_fixture = self.path_fixtures
-        errors = self.check.get_jshint_errors(path_fixture,
-            options=['--extra-ext', '.jss'])
+        errors = self.check.get_jshint_errors(
+            path_fixture,
+            options=['--extra-ext', '.jss']
+        )
         self.assertEqual(errors['total_errors'], 4)
         self.assertEqual(len(errors['list_errors']), 4)
 
@@ -89,16 +94,19 @@ class TestCodeQualityTools(unittest.TestCase):
 
     def test_get_csslint_errors_with_extra_options(self):
         path_fixture = self.path_fixtures + 'csslint.css'
-        errors = self.check.get_csslint_errors(path_fixture,
-            options=['--errors=ids'])
+        errors = self.check.get_csslint_errors(
+            path_fixture,
+            options=['--errors=ids']
+        )
         self.assertEqual(errors['total_errors'], 1)
         self.assertEqual(len(errors['list_errors']), 1)
 
     def test_get_clonedigger_errors(self):
         path_fixture = self.path_fixtures + 'clonedigger.py'
         errors = self.check.get_clonedigger_errors(path_fixture)
-        self.assertEqual(errors['total_clones'], 1)
-        self.assertEqual(errors['percentage_clones'], 100)
+        self.assertEqual(errors['total_errors'], 1)
+        self.assertEqual(errors['percentage_errors'], 100)
+        self.assertTrue(errors['list_errors'])
         self.assertFalse(isfile('output_clonedigger.html'))
 
     def test_get_clonedigger_errors_saving_in_output_file(self):
@@ -109,11 +117,12 @@ class TestCodeQualityTools(unittest.TestCase):
 
     def test_get_all_errors(self):
         errors = self.check.get_all_errors(self.path_fixtures)
-        self.assertEqual(len(errors['pep8']), 2)
-        self.assertEqual(len(errors['pyflakes']), 2)
-        self.assertEqual(len(errors['jshint']), 2)
-        self.assertEqual(len(errors['csslint']), 2)
-        self.assertEqual(len(errors['clonedigger']), 2)
+
+        tasks = ['pep8', 'pyflakes', 'jshint', 'csslint', 'clonedigger']
+        for task in tasks:
+            self.assertTrue('total_errors' in errors[task].keys())
+            self.assertTrue('list_errors' in errors[task].keys())
+            self.assertTrue('percentage_errors' in errors[task].keys())
 
 if __name__ == '__main__':
     unittest.main()
