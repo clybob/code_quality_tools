@@ -9,7 +9,8 @@ from code_quality_tools import CodeQualityCheck
 
 
 class TestCodeQualityTools(unittest.TestCase):
-    path_fixtures = 'code_quality_tools/tests/fixtures/'
+    ROOT_PATH = os.path.abspath(os.path.dirname(__file__))
+    path_fixtures = os.path.join(ROOT_PATH, 'fixtures/')
     check = CodeQualityCheck()
     out_files = {
         'pep8': 'pep8_errors.txt',
