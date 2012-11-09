@@ -1,6 +1,8 @@
 code_quality_tools
 ==================
 
+[![Build Status](https://secure.travis-ci.org/tarsis/code_quality_tools.png?branch=clonedigger_inconsistency)](https://travis-ci.org/tarsis/code_quality_tools)
+
 What is a code_quality_tools?
 -----------------------------
 
