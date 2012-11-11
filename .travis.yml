@@ -4,6 +4,12 @@ python:
   - "2.7"
 
 install:
+  - "sudo apt-get install -y python-software-properties"
+  - "sudo add-apt-repository -y ppa:chris-lea/node.js"
+  - "sudo apt-get update -y"
+  - "sudo apt-get install -y nodejs npm"
+  - "sudo npm install -g jshint"
+  - "sudo npm install -g csslint"
   - "pip install -e ."
 
 script: make test

@@ -26,7 +26,11 @@ class CodeQualityCheck():
             lines = self.__save_output_file_and_get_errors(command, stdout)
 
         count_errors = len(lines)
-        errors = {'total_errors': count_errors, 'list_errors': lines}
+        errors = {
+            'total_errors': count_errors,
+            'list_errors': lines,
+            'percentage_errors': None
+        }
 
         return errors
 
@@ -95,15 +99,16 @@ class CodeQualityCheck():
         regex_percentage = '(?<=duplicates \()\d+'
         regex_total = '(?<=Clones detected: )\d+'
 
-        porcentage = re.search(regex_percentage, result_clonedigger)
-        porcentage = int(porcentage.group())
+        percentage = re.search(regex_percentage, result_clonedigger)
+        percentage = int(percentage.group())
 
-        total_clones = re.search(regex_total, result_clonedigger)
-        total_clones = int(total_clones.group())
+        total_errors = re.search(regex_total, result_clonedigger)
+        total_errors = int(total_errors.group())
 
         result = {
-            'total_clones': total_clones,
-            'percentage_clones': porcentage
+            'total_errors': total_errors,
+            'percentage_errors': percentage,
+            'list_errors': result_clonedigger
         }
         return result
 
