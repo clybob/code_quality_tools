@@ -168,6 +168,12 @@ Colaborators
 
 **Zacarias Eugenio**
 
+**Enrico Batista**
+- https://github.com/ricobl
+
+**Tarsis Azevedo**
+- https://github.com/tarsis
+
 
 License
 -------
