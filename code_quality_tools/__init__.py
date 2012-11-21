@@ -8,15 +8,19 @@ class CodeQualityCheck():
     using known python tools. The objective is to easily get
     data of code quality"""
 
-    def __execute(self, tool, path, output_file, options):
+    def __execute(self, tool, path, output_file, options, extension):
         """Prepares to execute a shell command"""
+
+        number_of_lines = self.get_lines_per_language(path, extension)
 
         command = [tool, path]
         command.extend(options)
-        output = self.__execute_shell_command(command, output_file)
+        output = self.__execute_shell_command(
+            command, output_file, number_of_lines
+        )
         return output
 
-    def __execute_shell_command(self, command, stdout=None):
+    def __execute_shell_command(self, command, stdout=None, lines_per_lang=0):
         """Executes a shell command and saves output in a file
         if stdout was passed"""
 
@@ -26,10 +30,14 @@ class CodeQualityCheck():
             lines = self.__save_output_file_and_get_errors(command, stdout)
 
         count_errors = len(lines)
+        percentage_errors = float(count_errors) / float(lines_per_lang)
+        percentage_errors = percentage_errors * 100
+        percentage_errors = round(percentage_errors, 2)
+
         errors = {
             'total_errors': count_errors,
             'list_errors': lines,
-            'percentage_errors': None
+            'percentage_errors': percentage_errors
         }
 
         return errors
@@ -64,18 +72,28 @@ class CodeQualityCheck():
         output_file.close()
         return lines
 
+    def get_lines_per_language(self, path='.', language_extension='py'):
+        """Gets total of lines per language extension"""
+
+        LAST_LINE = 1
+        command = 'find %s -name "*.%s" -exec cat {} \; | wc -l;' % (
+            path, language_extension
+        )
+        number_of_lines = int(subprocess.check_output(command, shell=True))
+        return number_of_lines + LAST_LINE
+
     def get_pep8_errors(self, path='.', output_file=None, options=[]):
-        return self.__execute('pep8', path, output_file, options)
+        return self.__execute('pep8', path, output_file, options, 'py')
 
     def get_pyflakes_errors(self, path='.', output_file=None, options=[]):
-        return self.__execute('pyflakes', path, output_file, options)
+        return self.__execute('pyflakes', path, output_file, options, 'py')
 
     def get_jshint_errors(self, path='.', output_file=None, options=[]):
-        return self.__execute('jshint', path, output_file, options)
+        return self.__execute('jshint', path, output_file, options, 'js')
 
     def get_csslint_errors(self, path='.', output_file=None, options=[]):
         options.extend(['--format=compact'])
-        return self.__execute('csslint', path, output_file, options)
+        return self.__execute('csslint', path, output_file, options, 'css')
 
     def get_clonedigger_errors(self, path='.', output_file=None, options=[]):
         """Clonedigger generates a output_file by default, this method read
@@ -87,7 +105,7 @@ class CodeQualityCheck():
             default_output_file = output_file
 
         options.extend(['--output=%s' % default_output_file])
-        self.__execute('clonedigger', path, None, options)
+        self.__execute('clonedigger', path, None, options, 'py')
 
         output_clonedigger = open(default_output_file)
         result_clonedigger = output_clonedigger.read()
