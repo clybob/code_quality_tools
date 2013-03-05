@@ -1,6 +1,7 @@
 import subprocess
 import re
 import os
+import sys
 
 
 class CodeQualityCheck():
@@ -139,3 +140,8 @@ class CodeQualityCheck():
             'clonedigger': self.get_clonedigger_errors(path)
         }
         return errors
+
+
+if __name__ == '__main__':
+    check = CodeQualityCheck()
+    print check.get_all_errors(sys.argv[0])
