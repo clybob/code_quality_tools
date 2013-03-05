@@ -144,4 +144,4 @@ class CodeQualityCheck():
 
 if __name__ == '__main__':
     check = CodeQualityCheck()
-    print check.get_all_errors(sys.argv[0])
+    print check.get_all_errors(sys.argv[1])
