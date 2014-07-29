@@ -16,7 +16,7 @@ install_node_in_linux:
 
 install_node_in_mac:
 	@brew upgrade $(node)
-	@curl http://npmjs.org/install.sh | sh
+	@curl -L http://npmjs.org/install.sh | sh
 
 install_jshint:
 	@npm install jshint -g
